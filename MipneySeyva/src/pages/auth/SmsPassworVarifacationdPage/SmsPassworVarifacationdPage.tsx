@@ -8,16 +8,19 @@ import SmoothPinCodeInput from "react-native-smooth-pincode-input";
 import { Fonts } from "../../../constants/fonts";
 import MediumText from "../../../components/MediumText/MediumText";
 import SvgIcon from "../../../../SvgIcon";
+import { useTranslation } from "react-i18next";
 
 const SmsPassworVarifacationdPage = () => {
+  const [t, i18n] = useTranslation();
   const [password, setPassword] = useState("");
   return (
     <SafeAreaView style={styles.container}>
-      <BoldText style={styles.bold}>קוד אימות</BoldText>
+      <BoldText style={styles.bold}>
+        {t("register.smsPassword.header")}
+      </BoldText>
       <RegularText style={styles.regular}>
-        הזן בבקשה את קוד האימות שנשלח אליך
+        {t("register.smsPassword.typePassword")}
       </RegularText>
-      {/* <CodeInput /> */}
       <View style={styles.input}>
         <SmoothPinCodeInput
           onTextChange={(text) => setPassword(text)}
@@ -31,9 +34,9 @@ const SmsPassworVarifacationdPage = () => {
           textStyle={styles.textStyle}
         />
       </View>
-      <MediumText style={styles.wrongInput}>הקוד שגוי, נסה שוב</MediumText>
-
-
+      <MediumText style={styles.wrongInput}>
+        {t("register.smsPassword.wrongPassword")}
+      </MediumText>
     </SafeAreaView>
   );
 };

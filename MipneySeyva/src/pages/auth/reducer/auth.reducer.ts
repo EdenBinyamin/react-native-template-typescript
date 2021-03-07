@@ -6,6 +6,7 @@ import {
   AUTH_SET_IS_PASSWORD_VALID,
   AUTH_SET_IS_PASSWORD_MATCH_TO_SECOND_PASSWORD,
   AUTH_UPDATE_FLOW_STEP,
+  AUTH_SET_IS_SETTINGS_OPEN,
 } from "../actionTypes/auth.actionTypes";
 
 interface AuthReducer {
@@ -15,6 +16,7 @@ interface AuthReducer {
   isPasswordValid: boolean;
   isPasswordMatchToSecondPassword: boolean;
   flowStep: 1 | 2;
+  isSettingsOpen: boolean;
 }
 
 export const INITIAL_STATE: AuthReducer = {
@@ -24,6 +26,7 @@ export const INITIAL_STATE: AuthReducer = {
   isPasswordValid: false,
   isPasswordMatchToSecondPassword: false,
   flowStep: 1,
+  isSettingsOpen: false,
 };
 
 export default (
@@ -31,6 +34,12 @@ export default (
   action: AuthActionTypes
 ): AuthReducer => {
   switch (action.type) {
+    case AUTH_SET_IS_SETTINGS_OPEN: {
+      return {
+        ...state,
+        isSettingsOpen: action.isOpen,
+      };
+    }
     case AUTH_SET_PASSWORD: {
       return {
         ...state,

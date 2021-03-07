@@ -12,6 +12,8 @@ import {
   AUTH_SET_PHOTO,
   AUTH_UPDATE_FLOW_STEP,
   AuthUpdateFlowStep,
+  AuthSetIsSettingsOpen,
+  AUTH_SET_IS_SETTINGS_OPEN,
 } from "../actionTypes/auth.actionTypes";
 
 export const authSetPasswordAction = (password: string): AuthSetPassword => ({
@@ -25,16 +27,22 @@ export const authSetSecondPasswordAction = (
 export const authSetIsPasswordValidAction = (): AuthSetIsPasswordValid => {
   const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
   const password = store.getState().auth.password;
-  console.log(passwordRegex.test(password))
+  console.log(passwordRegex.test(password));
   return {
     type: AUTH_SET_IS_PASSWORD_VALID,
     isValid: passwordRegex.test(password),
   };
 };
 
+export const authSetIsSettingsOpenAction = (
+  isOpen: boolean
+): AuthSetIsSettingsOpen => ({ type: AUTH_SET_IS_SETTINGS_OPEN, isOpen });
+
 export const authSetIsPasswordMatchToSecondPassAction = (): AuthSetIsPasswordMatchToSecondPass => {
   const { password, secondPassword } = store.getState().auth;
-  console.log(`authSetIsPasswordMatchToSecondPassAction, password: ${password}, secondPassword: ${secondPassword}`)
+  console.log(
+    `authSetIsPasswordMatchToSecondPassAction, password: ${password}, secondPassword: ${secondPassword}`
+  );
   return {
     type: AUTH_SET_IS_PASSWORD_MATCH_TO_SECOND_PASSWORD,
     isMatch: password === secondPassword,
@@ -46,8 +54,9 @@ export const authSetPhotoAction = (photo: any): AuthSetPhoto => ({
   photo,
 });
 
-export const authUpdateFlowStepAction = (flowStep: 1 | 2): AuthUpdateFlowStep => ({
+export const authUpdateFlowStepAction = (
+  flowStep: 1 | 2
+): AuthUpdateFlowStep => ({
   type: AUTH_UPDATE_FLOW_STEP,
   flowStep,
 });
-

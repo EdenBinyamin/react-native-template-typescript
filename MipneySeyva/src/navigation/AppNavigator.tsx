@@ -6,12 +6,17 @@ import {
 } from "@react-navigation/stack";
 import RegisterPage from "../pages/auth/RegisterPage/RegisterPage";
 import SmsPassworVarifacationdPage from "../pages/auth/SmsPassworVarifacationdPage/SmsPassworVarifacationdPage";
+import MainScreen from "../pages/homepage/MainScreen/MainScreen";
+import { DrawerProps } from "./DrawerNavigator";
 
 const Stack = createStackNavigator<RootStackParamList>();
 
 type RootStackParamList = {
   SmsPassworVarifacationdPage: undefined;
   RegisterPage: undefined;
+  MainScreen: undefined;
+  Login: undefined;
+  EditProfile: undefined;
 };
 
 export type NavigatorNavigationProps = StackNavigationProp<
@@ -26,7 +31,7 @@ export type NavigatorProps = {
 const AppNavigator = () => {
   return (
     <Stack.Navigator
-      initialRouteName={"RegisterPage"}
+      initialRouteName={"MainScreen"}
       screenOptions={{ headerShown: false }}
     >
       <Stack.Screen name="RegisterPage" component={RegisterPage} />
@@ -34,8 +39,11 @@ const AppNavigator = () => {
         name="SmsPassworVarifacationdPage"
         component={SmsPassworVarifacationdPage}
       />
+      <Stack.Screen name="MainScreen" component={MainScreen} />
+      <Stack.Screen name="EditProfile" component={MainScreen} />
+      <Stack.Screen name="Login" component={MainScreen} />
     </Stack.Navigator>
   );
 };
 
-export default AppNavigator
+export default AppNavigator;

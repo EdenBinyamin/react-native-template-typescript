@@ -1,9 +1,5 @@
 import React, { useState } from "react";
-import {
-  Image,
-  StyleSheet,
-  View,
-} from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import SvgIcon from "../../../../SvgIcon";
 import BlueButton from "../../../components/BlueButton/BlutButton";
 import BoldText from "../../../components/BoldText/BoldText";
@@ -18,13 +14,13 @@ import {
   authSetIsPasswordMatchToSecondPassAction,
   authSetIsPasswordValidAction,
   authSetPasswordAction,
-  authSetPhotoAction,
   authSetSecondPasswordAction,
   authUpdateFlowStepAction,
 } from "../actions/auth.action";
 import PasswordInput from "../../../components/PasswordInput/PasswordInput";
 import { MediaType } from "react-native-image-picker";
 import { captureImage } from "../../../utils/camera";
+import { useTranslation } from "react-i18next";
 
 const RegisterPage = () => {
   const {
@@ -36,17 +32,17 @@ const RegisterPage = () => {
     isPasswordMatchToSecondPassword,
   } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
-
+  const [t, i18n] = useTranslation();
   const renderPasswordNotValid = (): JSX.Element => {
     return (
       <>
         {password.length === 0 ? (
           <MediumText style={styles.passwordNotValid}>
-            יש להזין סיסמה
+            {t("register.registeration.lengthZero")}
           </MediumText>
         ) : (
           <MediumText style={styles.passwordNotValid}>
-            יש להזין סיסמה בעלת 8 תווים שתכלול אותיות ומספרים
+            {t("register.registeration.passwordDetails")}
           </MediumText>
         )}
       </>
@@ -55,15 +51,15 @@ const RegisterPage = () => {
 
   const renderPasswordNotMatch = () => (
     <MediumText style={styles.passwordNotValid}>
-      יש להזין סיסמה תואמת לסיסמה שהקלדת
+      {t("register.registeration.matchingPassword")}
     </MediumText>
   );
 
   const renderFlowStep = () => (
     <>
       <PasswordInput
-        passwordText={"סיסמה"}
-        placeholder={"הזן סיסמה"}
+        passwordText={t("register.registeration.password")}
+        placeholder={t("register.registeration.typePassword")}
         action={authSetPasswordAction}
         onBlur={authSetIsPasswordValidAction}
         renderPasswordNotValid={renderPasswordNotValid}
@@ -71,8 +67,8 @@ const RegisterPage = () => {
         value={password}
       />
       <PasswordInput
-        passwordText={"אימות סיסמה"}
-        placeholder={"הזן סיסמה פעם נוספת"}
+        passwordText={t("register.registeration.passwordAuthentication")}
+        placeholder={t("register.registeration.typeAgain")}
         action={authSetSecondPasswordAction}
         onBlur={authSetIsPasswordMatchToSecondPassAction}
         renderPasswordNotValid={renderPasswordNotMatch}
@@ -110,7 +106,7 @@ const RegisterPage = () => {
         viewBox={"0 0 41 33"}
         style={{ position: "relative" }}
       />
-      <MediumText>הוסף תמונה</MediumText>
+      <MediumText>{t("register.registeration.addPicture")}</MediumText>
     </View>
   );
 
@@ -128,10 +124,12 @@ const RegisterPage = () => {
   return (
     <View style={styles.wrapper}>
       <View style={styles.flowContainer}></View>
-      <BoldText style={styles.header}>הרשמה</BoldText>
+      <BoldText style={styles.header}>
+        {t("register.registeration.registeration")}
+      </BoldText>
       {flowStep === 2 ? (
         <RegularText style={styles.photoText}>
-          הכנס את תמונת הפרופיל שלך שתוצג לבני המשפחה שלך
+          {t("register.registeration.takePicture")}
         </RegularText>
       ) : null}
       <View style={styles.container}>
@@ -139,7 +137,7 @@ const RegisterPage = () => {
 
         <BlueButton
           // disabled={!isPasswordValid || !isPasswordMatchToSecondPassword}
-          proceed={"המשך"}
+          proceed={t("register.registeration.continue")}
           action={() =>
             dispatch(authUpdateFlowStepAction(flowStep === 1 ? 2 : 1))
           }
