@@ -34,7 +34,7 @@ const Settings: React.FC<NavigatorProps> = (props: NavigatorProps) => {
         animationIn="slideInDown"
         animationOut="slideOutUp"
         isVisible={isSettingsOpen}
-        style={{ ...styles.container, maxHeight: isCollpased ? 312 : 732 }}
+        style={{ ...styles.container, maxHeight: 312 }}
       >
         <View style={styles.container}>{renderModalContent()}</View>
       </Modal>
@@ -239,9 +239,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#EAEBF3",
   },
   navigationContainer: {
-    width: wp("87.6%"),
-    marginLeft: "auto",
-    marginRight: "auto",
+    backgroundColor: "#6F6F6F",
+    width: wp('100%'),
+    paddingLeft: wp('6.2%'),
+    paddingRight: wp('6.2%'),
     height: 72,
     justifyContent: "center",
   },
