@@ -34,7 +34,11 @@ const Settings: React.FC<NavigatorProps> = (props: NavigatorProps) => {
         animationIn="slideInDown"
         animationOut="slideOutUp"
         isVisible={isSettingsOpen}
-        style={{ ...styles.container, maxHeight: 312 }}
+        style={{
+          ...styles.container,
+          maxHeight: 285,
+          paddingTop: isAndroid ? 0 : 30,
+        }}
       >
         <View style={styles.container}>{renderModalContent()}</View>
       </Modal>
@@ -49,6 +53,7 @@ const Settings: React.FC<NavigatorProps> = (props: NavigatorProps) => {
       {renderBorder()}
       {renderNavigationTo("EditProfile")}
       {renderBorder()}
+      {isAndroid ? renderBorder() : null}
       {renderNavigationTo("Login")}
     </>
   );
@@ -192,12 +197,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "#6F6F6F",
     marginTop: -5,
-    height: 312,
     width: wp("100%"),
     marginLeft: "auto",
     marginRight: "auto",
     justifyContent: "flex-start",
-    paddingTop: 30,
   },
   headerContainer: {
     flexDirection: "row",
@@ -240,9 +243,9 @@ const styles = StyleSheet.create({
   },
   navigationContainer: {
     backgroundColor: "#6F6F6F",
-    width: wp('100%'),
-    paddingLeft: wp('6.2%'),
-    paddingRight: wp('6.2%'),
+    width: wp("100%"),
+    paddingLeft: wp("6.2%"),
+    paddingRight: wp("6.2%"),
     height: 72,
     justifyContent: "center",
   },
