@@ -1,3 +1,4 @@
+import { AppThunkAction } from "../../../..";
 import { store } from "../../../store";
 import {
   AuthSetPassword,
@@ -14,7 +15,9 @@ import {
   AuthUpdateFlowStep,
   AuthSetIsSettingsOpen,
   AUTH_SET_IS_SETTINGS_OPEN,
+  AUTH_SET_LANGUAGE,
 } from "../actionTypes/auth.actionTypes";
+import { AsyncStorage, NativeModules, Platform } from "react-native";
 
 export const authSetPasswordAction = (password: string): AuthSetPassword => ({
   type: AUTH_SET_PASSWORD,
@@ -37,6 +40,20 @@ export const authSetIsPasswordValidAction = (): AuthSetIsPasswordValid => {
 export const authSetIsSettingsOpenAction = (
   isOpen: boolean
 ): AuthSetIsSettingsOpen => ({ type: AUTH_SET_IS_SETTINGS_OPEN, isOpen });
+
+export const authSetLanguageAction = (): AppThunkAction => async (dispatch) => {
+  try {
+    let language = AsyncStorage.getItem("lang");
+    if (!language) {
+      language =
+        Platform.OS === "ios"
+          ? NativeModules.SettingsManager.settings.AppleLocale ||
+            NativeModules.SettingsManager.settings.AppleLanguages[0] // iOS 13
+          : NativeModules.I18nManager.localeIdentifier;
+    }
+    dispatch({ type: AUTH_SET_LANGUAGE, language });
+  } catch (error) {}
+};
 
 export const authSetIsPasswordMatchToSecondPassAction = (): AuthSetIsPasswordMatchToSecondPass => {
   const { password, secondPassword } = store.getState().auth;

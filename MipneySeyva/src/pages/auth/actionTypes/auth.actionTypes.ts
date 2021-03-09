@@ -6,6 +6,12 @@ export const AUTH_SET_IS_PASSWORD_MATCH_TO_SECOND_PASSWORD =
 export const AUTH_SET_PHOTO = "AUTH_SET_PHOTO";
 export const AUTH_UPDATE_FLOW_STEP = "AUTH_UPDATE_FLOW_STEP";
 export const AUTH_SET_IS_SETTINGS_OPEN = "AUTH_SET_IS_SETTINGS_OPEN";
+export const AUTH_SET_LANGUAGE = "AUTH_SET_LANGUAGE";
+
+export interface AuthSetLanguage {
+  type: typeof AUTH_SET_LANGUAGE;
+  language: string;
+}
 
 export interface AuthSetIsSettingsOpen {
   type: typeof AUTH_SET_IS_SETTINGS_OPEN;
@@ -50,4 +56,5 @@ export type AuthActionTypes =
   | AuthSetPhoto
   | AuthSetIsPasswordValid
   | AuthUpdateFlowStep
-  | AuthSetIsSettingsOpen;
+  | AuthSetIsSettingsOpen
+  | AuthSetLanguage;

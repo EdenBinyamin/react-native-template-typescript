@@ -1,36 +1,47 @@
 require_relative '../node_modules/react-native/scripts/react_native_pods'
 require_relative '../node_modules/@react-native-community/cli-platform-ios/native_modules'
+# use_frameworks!
+# $static_framework = ['FlipperKit', 'Flipper', 'Flipper-Folly',
+# 'CocoaAsyncSocket', 'ComponentKit', 'DoubleConversion',
+# 'glog', 'Flipper-PeerTalk', 'Flipper-RSocket', 'Yoga', 'YogaKit',
+# 'CocoaLibEvent', 'OpenSSL-Universal', 'boost-for-react-native']
 
 platform :ios, '10.0'
+$FirebaseSDKVersion = '7.7.0'
 
-target 'HelloWorld' do
+# pod 'Firebase'
+# pod 'Firebase/Messaging'
+# pod 'Firebase/Core'
+
+target 'MipneySeyva' do
   config = use_native_modules!
-
   use_react_native!(:path => config["reactNativePath"])
-
   pod 'react-native-image-picker', :path => '../node_modules/react-native-image-picker'
 
   pod 'RNReanimated', :path => '../node_modules/react-native-reanimated'
-
-  target 'HelloWorldTests' do
+  pod 'Firebase/Messaging'
+  pod 'react-native-video', :path => '../node_modules/react-native-video'
+  # pod 'RNFirebase', :path => '../node_modules/react-native-firebase'
+  # pod 'RNFirebase', :path => '../node_modules/react-native-firebase/ios'
+  target 'MipneySeyvaTests' do
     inherit! :complete
     # Pods for testing
   end
-
+  # use_flipper!({ 'Flipper' => '0.74.0' })
+end
   # Enables Flipper.
   #
   # Note that if you have use_frameworks! enabled, Flipper will not work and
   # you should disable these next few lines.
-  use_flipper!
-  post_install do |installer|
-    flipper_post_install(installer)
-  end
-end
+#   use_flipper!
+#   post_install do |installer|
+#     flipper_post_install(installer)
+#   end
+# end
+target 'MipneySeyva-tvOS' do
+  # Pods for MipneySeyva-tvOS
 
-target 'HelloWorld-tvOS' do
-  # Pods for HelloWorld-tvOS
-
-  target 'HelloWorld-tvOSTests' do
+  target 'MipneySeyva-tvOSTests' do
     inherit! :search_paths
     # Pods for testing
   end

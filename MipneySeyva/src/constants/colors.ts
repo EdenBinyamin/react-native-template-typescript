@@ -1,3 +1,3 @@
 export const Colors = {
-  deepBlue: "#10004C",
+  deepBlue: "#182141",
 };

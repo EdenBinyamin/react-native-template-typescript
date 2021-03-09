@@ -17,6 +17,7 @@ interface AuthReducer {
   isPasswordMatchToSecondPassword: boolean;
   flowStep: 1 | 2;
   isSettingsOpen: boolean;
+  language: string;
 }
 
 export const INITIAL_STATE: AuthReducer = {
@@ -27,6 +28,7 @@ export const INITIAL_STATE: AuthReducer = {
   isPasswordMatchToSecondPassword: false,
   flowStep: 1,
   isSettingsOpen: false,
+  language: "",
 };
 
 export default (

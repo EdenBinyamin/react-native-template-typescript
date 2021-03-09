@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Image, StyleSheet, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StatusBar,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import SvgIcon from "../../../../SvgIcon";
 import BlueButton from "../../../components/BlueButton/BlutButton";
 import BoldText from "../../../components/BoldText/BoldText";
@@ -7,7 +14,6 @@ import MediumText from "../../../components/MediumText/MediumText";
 import PressButton from "../../../components/PressButton/PressButton";
 import RegularText from "../../../components/RegularText/RegularText";
 import { wp } from "../../../helpers/responsive";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../../rootReducer";
 import {
@@ -21,6 +27,11 @@ import PasswordInput from "../../../components/PasswordInput/PasswordInput";
 import { MediaType } from "react-native-image-picker";
 import { captureImage } from "../../../utils/camera";
 import { useTranslation } from "react-i18next";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { User } from "../../../models/User.model";
+import { Colors } from "../../../constants/colors";
+
+const user: User = { name: "יעלי" };
 
 const RegisterPage = () => {
   const {
@@ -33,6 +44,7 @@ const RegisterPage = () => {
   } = useSelector((state: RootState) => state.auth);
   const dispatch = useDispatch();
   const [t, i18n] = useTranslation();
+
   const renderPasswordNotValid = (): JSX.Element => {
     return (
       <>
@@ -55,7 +67,7 @@ const RegisterPage = () => {
     </MediumText>
   );
 
-  const renderFlowStep = () => (
+  const renderFirstStep = () => (
     <>
       <PasswordInput
         passwordText={t("register.registeration.password")}
@@ -78,72 +90,138 @@ const RegisterPage = () => {
     </>
   );
 
+  const renderPencilSvg = () => (
+    <SvgIcon
+      fill={Colors.deepBlue}
+      supportRtl={false}
+      width={41}
+      height={33}
+      name={"pencil"}
+      viewBox={"0 0 41 33"}
+      style={styles.pencil}
+    />
+  );
+
   const renderProfilePhoto = () => (
     <>
       <Image style={styles.image} source={{ uri: profilePhoto.uri }} />
-      <View style={styles.pencilCircle}>
-        <SvgIcon
-          fill={Colors.deepBlue}
-          supportRtl={false}
-          width={41}
-          height={33}
-          name={"pencil"}
-          viewBox={"0 0 41 33"}
-          style={styles.pencil}
-        />
-      </View>
+      <TouchableOpacity
+        onPress={() => captureImage()}
+        style={styles.pencilCircle}
+      >
+        {renderPencilSvg()}
+      </TouchableOpacity>
     </>
+  );
+
+  const renderCameraSvg = () => (
+    <SvgIcon
+      fill={"rgb(16,0,76)"}
+      supportRtl={false}
+      width={41}
+      height={33}
+      name={"camera"}
+      viewBox={"0 0 41 33"}
+      style={{ position: "relative" }}
+    />
   );
 
   const renderUploadPhoto = () => (
     <View style={styles.photoCircle}>
-      <SvgIcon
-        fill={"rgb(16,0,76)"}
-        supportRtl={false}
-        width={41}
-        height={33}
-        name={"camera"}
-        viewBox={"0 0 41 33"}
-        style={{ position: "relative" }}
-      />
+      {renderCameraSvg()}
       <MediumText>{t("register.registeration.addPicture")}</MediumText>
     </View>
   );
 
   const renderSecondStep = () => (
-    <>
-      <PressButton
-        onPress={() => captureImage()}
-        content={() =>
-          profilePhoto?.fileName ? renderProfilePhoto() : renderUploadPhoto()
-        }
-      />
-    </>
+    <View>
+      {profilePhoto?.uri ? (
+        renderProfilePhoto()
+      ) : (
+        <PressButton
+          onPress={() => captureImage()}
+          content={() => renderUploadPhoto()}
+        />
+      )}
+    </View>
   );
 
-  return (
-    <View style={styles.wrapper}>
-      <View style={styles.flowContainer}></View>
-      <BoldText style={styles.header}>
-        {t("register.registeration.registeration")}
-      </BoldText>
-      {flowStep === 2 ? (
-        <RegularText style={styles.photoText}>
-          {t("register.registeration.takePicture")}
-        </RegularText>
-      ) : null}
-      <View style={styles.container}>
-        {flowStep === 1 ? renderFlowStep() : renderSecondStep()}
+  const renderRightArrowSvg = () => (
+    <SvgIcon
+      fill={"rgb(16,0,76)"}
+      supportRtl={false}
+      width={7}
+      height={11}
+      name={"rightArrow"}
+      viewBox={"0 0 7 11"}
+    />
+  );
 
+  const renderGoBackButton = () => (
+    <PressButton
+      onPress={() => dispatch(authUpdateFlowStepAction(1))}
+      content={
+        <View style={styles.goBackContainer}>
+          {renderRightArrowSvg()}
+          <BoldText style={{ fontSize: 18, marginLeft: 12 }}>
+            {t("register.registeration.goBack")}
+          </BoldText>
+        </View>
+      }
+    />
+  );
+
+  const renderSecondStepContainer = () => (
+    <View style={styles.secondStepContainer}>
+      {renderSecondStep()}
+      <View style={styles.buttonsContainer}>
+        {renderGoBackButton()}
         <BlueButton
           // disabled={!isPasswordValid || !isPasswordMatchToSecondPassword}
-          proceed={t("register.registeration.continue")}
+          proceed={t("register.registeration.register")}
           action={() =>
             dispatch(authUpdateFlowStepAction(flowStep === 1 ? 2 : 1))
           }
         />
       </View>
     </View>
+  );
+
+  const renderFirstStepContainer = () => (
+    <View style={styles.firstStepContainer}>
+      {renderFirstStep()}
+      <BlueButton
+        // disabled={!isPasswordValid || !isPasswordMatchToSecondPassword}
+        proceed={t("register.registeration.continue")}
+        action={() =>
+          dispatch(authUpdateFlowStepAction(flowStep === 1 ? 2 : 1))
+        }
+      />
+    </View>
+  );
+
+  const renderHeaderFlowStep = (bold: string, regular: string) => (
+    <>
+      <BoldText style={styles.header}>{bold}</BoldText>
+      <RegularText style={styles.photoText}>{regular}</RegularText>
+    </>
+  );
+
+  return (
+    <SafeAreaView style={styles.wrapper}>
+      {flowStep === 1
+        ? renderHeaderFlowStep(
+            t("register.registeration.header", { name: user.name }),
+            t("register.registeration.details")
+          )
+        : renderHeaderFlowStep(
+            t("register.registeration.profilePicture"),
+            t("register.registeration.takePicture")
+          )}
+      {flowStep === 1
+        ? renderFirstStepContainer()
+        : renderSecondStepContainer()}
+    </SafeAreaView>
   );
 };
 export default RegisterPage;
@@ -153,11 +231,20 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#E5E5E5",
   },
-  container: {
+  firstStepContainer: {
     flex: 0.7,
     width: wp("86.2%"),
     marginLeft: "auto",
     marginRight: "auto",
+    justifyContent: "center",
+  },
+  secondStepContainer: {
+    flex: 0.7,
+    width: wp("86.2%"),
+    position: "absolute",
+    top: wp("50%"),
+    bottom: wp("50%"),
+    alignSelf: "center",
     justifyContent: "center",
   },
   header: {
@@ -167,10 +254,15 @@ const styles = StyleSheet.create({
     marginLeft: "auto",
     marginRight: "auto",
   },
-
+  goBackContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 48,
+    marginRight: 33,
+  },
   photoText: {
     marginTop: 12,
-    width: wp("50%"),
+    width: wp("60%"),
     textAlign: "center",
     marginLeft: "auto",
     marginRight: "auto",
@@ -187,20 +279,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   flowContainer: {
+    marginTop: 100,
     flexDirection: "row",
     alignItems: "center",
     marginLeft: "auto",
     marginRight: "auto",
-  },
-  pencilCircle: {
-    // paddingTop: 50,
-    position: "absolute",
-    borderRadius: 75,
-    width: 46,
-    height: 46,
-    backgroundColor: "#10004C",
-    bottom: 10,
-    left: "65%",
   },
   image: {
     width: 200,
@@ -211,6 +294,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#16006F",
   },
+  pencilCircle: {
+    position: "absolute",
+    borderRadius: 75,
+    width: 46,
+    height: 46,
+    backgroundColor: "#10004C",
+    left: "65%",
+    bottom: "10%",
+  },
   pencil: {
     position: "absolute",
     top: "32%",
@@ -218,5 +310,11 @@ const styles = StyleSheet.create({
   },
   passwordNotValid: {
     color: "#FF0000",
+  },
+  buttonsContainer: {
+    position: "absolute",
+    top: "100%",
+    flexDirection: "row",
+    alignItems: "center",
   },
 });

@@ -39,10 +39,10 @@ const styles = StyleSheet.create({
   container: {
     width: 179,
     height: 56,
-    backgroundColor: "rgb(16,0,76)",
+    backgroundColor: "#182141",
     borderRadius: 75,
     borderColor: "rgb(83,121,238)",
-    borderWidth: 1,
+    // borderWidth: 1,
   },
   blueButton: {
     textAlign: "center",

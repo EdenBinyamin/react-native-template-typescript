@@ -7,7 +7,7 @@ import {
 import RegisterPage from "../pages/auth/RegisterPage/RegisterPage";
 import SmsPassworVarifacationdPage from "../pages/auth/SmsPassworVarifacationdPage/SmsPassworVarifacationdPage";
 import MainScreen from "../pages/homepage/MainScreen/MainScreen";
-import { DrawerProps } from "./DrawerNavigator";
+import { StatusBar } from "react-native";
 
 const Stack = createStackNavigator<RootStackParamList>();
 

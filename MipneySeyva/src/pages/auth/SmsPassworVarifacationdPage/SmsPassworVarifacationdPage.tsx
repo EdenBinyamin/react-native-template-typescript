@@ -9,17 +9,19 @@ import { Fonts } from "../../../constants/fonts";
 import MediumText from "../../../components/MediumText/MediumText";
 import SvgIcon from "../../../../SvgIcon";
 import { useTranslation } from "react-i18next";
+import { NavigatorProps } from "../../../navigation/AppNavigator";
+import BlueButton from "../../../components/BlueButton/BlutButton";
 
-const SmsPassworVarifacationdPage = () => {
+const SmsPassworVarifacationdPage = (props: NavigatorProps) => {
   const [t, i18n] = useTranslation();
   const [password, setPassword] = useState("");
   return (
     <SafeAreaView style={styles.container}>
       <BoldText style={styles.bold}>
-        {t("register.smsPassword.header")}
+        {t("register.smsPasswordPage.header")}
       </BoldText>
       <RegularText style={styles.regular}>
-        {t("register.smsPassword.typePassword")}
+        {t("register.smsPasswordPage.typePassword")}
       </RegularText>
       <View style={styles.input}>
         <SmoothPinCodeInput
@@ -35,8 +37,13 @@ const SmsPassworVarifacationdPage = () => {
         />
       </View>
       <MediumText style={styles.wrongInput}>
-        {t("register.smsPassword.wrongPassword")}
+        {t("register.smsPasswordPage.wrongPassword")}
       </MediumText>
+      <BlueButton
+        proceed={t("register.smsPasswordPage.continue")}
+        action={() => props.navigation.navigate("RegisterPage")}
+        disabled={password.length < 6}
+      />
     </SafeAreaView>
   );
 };

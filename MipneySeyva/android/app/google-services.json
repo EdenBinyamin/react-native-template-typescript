@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1029961061800",
+    "project_id": "mipneymvpdev",
+    "storage_bucket": "mipneymvpdev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1029961061800:android:511a231241c5472c25b99d",
+        "android_client_info": {
+          "package_name": "com.mipneyseyva"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1029961061800-5b2b5tkc7m4smvmfibu6hld76v8ocb0s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD7P79d4OckxBbRGrlE6tXkwnjZ60JPj6M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1029961061800-5b2b5tkc7m4smvmfibu6hld76v8ocb0s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

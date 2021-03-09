@@ -1,18 +1,17 @@
-import React from 'react';
+import React from "react";
 import {
-    NavigationContainer,
-    NavigationContainerRef,
-  } from "@react-navigation/native";
-  import { SafeAreaProvider } from 'react-native-safe-area-context';
+  NavigationContainer,
+  NavigationContainerRef,
+} from "@react-navigation/native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 import AppNavigator from "./AppNavigator";
-import { StyleSheet } from 'react-native';
-import DrawerNavigator from './DrawerNavigator';
-import { enableScreens } from 'react-native-screens';
+import { StyleSheet } from "react-native";
+import { enableScreens } from "react-native-screens";
 
 const isReadyRef = (React.createRef() as unknown) as React.RefObject<NavigationContainerRef>;
 const navigationRef = (React.createRef() as unknown) as React.RefObject<NavigationContainerRef>;
 
-enableScreens()
+enableScreens();
 
 const NavigationWrapper = () => (
   <NavigationContainer
@@ -29,8 +28,8 @@ const NavigationWrapper = () => (
 export default NavigationWrapper;
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
 });
